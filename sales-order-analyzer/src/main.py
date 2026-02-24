@@ -8,7 +8,8 @@ def menu():
         print("\n--------Sales Order Analyzer--------")
         print("1. Load CSV")
         print("2. Revenue Per product")
-        print("3. Exit")
+        print("3. Revenue Per Category")
+        print("4. Exit")
         choice = input("Enter your choice: ").strip()
 
         if choice == "1":
@@ -18,6 +19,9 @@ def menu():
             revenue_per_product()
 
         elif choice == "3":
+            revenue_per_category()
+
+        elif choice == "4":
             print("Thank you for using Sales Order Analyzer")
             break
 
@@ -47,6 +51,21 @@ def revenue_per_product():
     result = data.groupby("Product")["Revenue"].sum()
 
     print("\n--- Total Revenue Per Product ---")
+    print(result)
+
+
+def revenue_per_category():
+    global data
+
+    if data is None:
+        print("Please load the CSV file first")
+        return
+    
+    data["Revenue"] = data["Quantity"] * data["Price"]
+
+    result = data.groupby("Category")["Revenue"].sum()
+
+    print("\n--- Total Revenue Per Category ---")
     print(result)
 
 
