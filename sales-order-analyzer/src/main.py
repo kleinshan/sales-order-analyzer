@@ -10,7 +10,8 @@ def menu():
         print("2. Revenue Per product")
         print("3. Revenue Per Category")
         print("4. Revenue Per Country")
-        print("5. Exit")
+        print("5. Total Revenue")
+        print("6. Exit")
         choice = input("Enter your choice: ").strip()
 
         if choice == "1":
@@ -26,6 +27,9 @@ def menu():
             revenue_per_country()
 
         elif choice == "5":
+            total_revenue()
+
+        elif choice == "6":
             print("Thank you for using Sales Order Analyzer")
             break
 
@@ -85,6 +89,23 @@ def revenue_per_country():
 
     print("\n--- Total Revenue Per Country ---")
     print(result)
+
+
+def total_revenue():
+    global data
+
+    if data is None:
+        print("Please load the CSV file first")
+        return
+    
+    data["Revenue"] = data["Quantity"] * data["Price"]
+
+    result = data["Revenue"].sum()
+
+    print("\n--- Total Revenue ---")
+    print(result)
+    
+
 
 
 if __name__ == "__main__":
