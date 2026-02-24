@@ -3,17 +3,21 @@ import pandas as pd
 data = None
 
 def menu():
+    global data
     while(True):
         print("\n--------Sales Order Analyzer--------")
         print("1. Load CSV")
-        print("2. Exit")
-        choice = input("Enter your choice: ")
+        print("2. Revenue Per product")
+        print("3. Exit")
+        choice = input("Enter your choice: ").strip()
 
         if choice == "1":
-
             data = load_csv("sales-order-analyzer/data/orders.csv")
 
         elif choice == "2":
+            revenue_per_product()
+
+        elif choice == "3":
             print("Thank you for using Sales Order Analyzer")
             break
 
@@ -29,10 +33,26 @@ def load_csv(file_path):
     except FileNotFoundError:
         print("CSV file not found")
         return None
+    
+
+def revenue_per_product():
+    global data
+
+    if data is None:
+        print("Please load the CSV file first")
+        return
+    
+    data["Revenue"] = data["Quantity"] * data["Price"]
+
+    result = data.groupby("Product")["Revenue"].sum()
+
+    print("\n--- Total Revenue Per Product ---")
+    print(result)
+
 
 
 if __name__ == "__main__":
-
+    
     menu()
     
 
